@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Motors</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Uuid</th>
+      <th>Online</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @motors.each do |motor| %>
+      <tr>
+        <td><%= motor.uuid %></td>
+        <td><%= motor.online %></td>
+        <td><%= link_to 'Show', motor %></td>
+        <td><%= link_to 'Edit', edit_motor_path(motor) %></td>
+        <td><%= link_to 'Destroy', motor, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= button_to "Find", method: :post, action: "find", data: {uuid: motor.uuid} %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Motor', new_motor_path %>

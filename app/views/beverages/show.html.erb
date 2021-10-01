@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @beverage.name %>
+</p>
+
+<p>
+  <strong>Identifier:</strong>
+  <%= @beverage.identifier %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= @beverage.amount %>
+</p>
+
+<p>
+  <strong>Image url:</strong>
+  <%= @beverage.image_url %>
+</p>
+
+<p>
+  <strong>Image data:</strong>
+  <%= @beverage.image_data.empty? ? "" : "[BEVERAGE DATA]" %>
+</p>
+
+<%= link_to 'Edit', edit_beverage_path(@beverage) %> |
+<%= link_to 'Back', beverages_path %>

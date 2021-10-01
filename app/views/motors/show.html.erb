@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Uuid:</strong>
+  <%= @motor.uuid %>
+</p>
+
+<p>
+  <strong>Online:</strong>
+  <%= @motor.online %>
+</p>
+
+<%= link_to 'Edit', edit_motor_path(@motor) %> |
+<%= link_to 'Back', motors_path %>
