@@ -12,12 +12,12 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name %>
+    <%= form.label :human_name %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :identifier %>
+    <%= form.label :identifier_code %>
     <%= form.text_field :identifier %>
   </div>
 
@@ -34,6 +34,11 @@
   <div class="field">
     <%= form.label :image_data %>
     <%= form.text_field :image_data, disabled: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :associated_motor %>
+    <%= form.collection_select :motor_id, Motor.order(:uuid), :id, :uuid %>
   </div>
 
   <div class="actions">
