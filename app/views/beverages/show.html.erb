@@ -1,12 +1,12 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Name:</strong>
+  <strong>Human Name:</strong>
   <%= @beverage.name %>
 </p>
 
 <p>
-  <strong>Identifier:</strong>
+  <strong>Identifier Code:</strong>
   <%= @beverage.identifier %>
 </p>
 
@@ -21,8 +21,17 @@
 </p>
 
 <p>
+  <img src="<%= @beverage.image_url %>" style="width: 400px" />
+</p>
+
+<p>
   <strong>Image data:</strong>
-  <%= @beverage.image_data.empty? ? "" : "[BEVERAGE DATA]" %>
+  <%= @beverage.image_data.to_s.empty? ? "" : "[BEVERAGE DATA]" %>
+</p>
+
+<p>
+  <strong>Motor:</strong>
+  <%= @beverage.motor&.uuid %>
 </p>
 
 <%= link_to 'Edit', edit_beverage_path(@beverage) %> |

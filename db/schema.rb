@@ -10,28 +10,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_30_165537) do
+ActiveRecord::Schema.define(version: 2021_10_02_080127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "beverages", force: :cascade do |t|
-    t.bigint "motor_id"
     t.string "name", default: "yum yum yummy yum"
     t.string "identifier", default: ""
     t.integer "amount", default: 10
     t.string "image_url", default: ""
-    t.binary "image_data"
+    t.text "image_data"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["motor_id"], name: "index_beverages_on_motor_id"
   end
 
   create_table "motors", force: :cascade do |t|
+    t.bigint "beverage_id"
     t.string "uuid", default: ""
     t.boolean "online", default: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["beverage_id"], name: "index_motors_on_beverage_id", unique: true
   end
 
+  add_foreign_key "motors", "beverages"
 end

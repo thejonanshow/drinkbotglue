@@ -4,4 +4,5 @@ Rails.application.routes.draw do
   get "/beverages/status/:id", to: "beverages#status"
   post "/beverages/dispense", to: "beverages#dispense"
   post "/motors/find", to: "motors#find"
+  post "/motors/flush", to: "motors#flush"
 end

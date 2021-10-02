@@ -1,15 +1,17 @@
 <p id="notice"><%= notice %></p>
 
 <h1>Beverages</h1>
+<p><%= link_to "Goto Motors", motors_path %></p>
 
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Identifier</th>
+      <th>Human<br/>Name</th>
+      <th>Identifier<br/>Code</th>
       <th>Amount</th>
       <th>Image url</th>
       <th>Image data</th>
+      <th>Motor</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -20,8 +22,9 @@
         <td><%= beverage.name %></td>
         <td><%= beverage.identifier %></td>
         <td><%= beverage.amount %></td>
-        <td><%= beverage.image_url %></td>
-        <td><%= beverage.image_data.empty? ? "" : "[BEVERAGE_DATA]" %></td>
+        <td><%= beverage.image_url %><br/><img src="<%= beverage.image_url %>" style="width:  200px" /></td>
+        <td><%= beverage.image_data.to_s.empty? ? "" : "[BEVERAGE_DATA]" %></td>
+        <td><%= beverage.motor&.uuid %></td>
         <td><%= link_to 'Show', beverage %></td>
         <td><%= link_to 'Edit', edit_beverage_path(beverage) %></td>
         <td><%= link_to 'Destroy', beverage, method: :delete, data: { confirm: 'Are you sure?' } %></td>
