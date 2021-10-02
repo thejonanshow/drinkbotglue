@@ -20,10 +20,12 @@ Thread.new do
           # Check to see if it is a "name" message.
           payload = JSON.parse(message)
           if payload["command"].nil? && !payload["name"].empty?
-            motor = Motor.new(uuid: payload["name"]) unless Motor.find_by(uuid: payload["name"])
-            # When we instrument this with New Relic, write an event here.
-            STDERR.puts "saving #{motor.inspect}"
-            motor.save!
+            unless Motor.find_by(uuid: payload["name"])
+              motor = Motor.new(uuid: payload["name"])
+              # When we instrument this with New Relic, write an event here.
+              STDERR.puts "saving #{motor.inspect}"
+              motor.save
+            end
           elsif payload["command"].downcase == "find"
             # Skip this one
           else
