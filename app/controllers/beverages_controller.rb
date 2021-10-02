@@ -124,20 +124,26 @@ class BeveragesController < ApplicationController
         STDERR.puts beverage.inspect
         STDERR.puts "sending D,#{beverage.amount} to #{motor.uuid}"
 
-        # Redis.current.publish({
-        #   "name" => motor.uuid,
-        #   "command" => "D,"
-        # }.to_json)
+        Publisher.publish({
+          "name" => motor.uuid,
+          "command" => "D,#{beverage.amount}"
+        }.to_json)
 
         amounts_dispensed << {motor: motor, amount: beverage.amount}
+        # This is substandard. It is just waiting until it gets any message back from the bot
+        # in response to a check on the amount dispensed. At the same time, the time to dispense 10-30ml
+        # should be about 1 to 2.5 seconds, so do we really need to be paranoid beyond the time
+        # it takes to confirm that _something_ has happened with each motor involved?
+        # Probably, yes, but it is also 5:00 am, so live by the MVP, die by the MVP.
+        # TODO: Make this smarter and less bad later.
         while amounts_dispensed.any?
-          # Redis.current.publish({
-          #   "name" => amounts_dispensed.last[:motor].uuid,
-          #   "command" => "R"
-          # })
-          # while !(response = DrinkbotMessages.pop)
-          #   sleep 0.1
-          # end
+          Publisher.publish({
+            "name" => amounts_dispensed.last[:motor].uuid,
+            "command" => "R"
+          })
+          while !(response = DrinkbotMessages.pop)
+            sleep 0.1
+          end
           STDERR.puts "DEBUG: Got #{response.inspect}"
           amounts_dispensed.pop
         end
