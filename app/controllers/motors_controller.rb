@@ -85,6 +85,27 @@ class MotorsController < ApplicationController
     end
   end
 
+  # The request was to run the motors for n seconds, but the documentation
+  # for the motors doesn't show a way to do that.
+  # One can dispense a volume over time, a given volume, or at a given flow
+  # rate. In addition, one case set a given volume that is dispensed every time
+  # the motor comes on, but none of those are "pump for 10 seconds" or similar.
+  # Do the flush command just pushes 30ml (about 1 ounce), for all motors.
+  def flush
+    flushed_list = []
+    Motor.all.each do |motor|
+      Publisher.publish("drinkbot", {
+        "name" => motor.uuid,
+        "command" => "D,30" # flush one ounce through the tubes
+      })
+      flushed_list << motor.uuid
+    end
+    respond_to do |format|
+      format.html { redirect_to motors_url, notice: "Motors flushed: #{flushed_list.join(", ")}" }
+      format.json { head :no_content }
+    end
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_motor
